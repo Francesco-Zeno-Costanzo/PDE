@@ -9,19 +9,19 @@ from mpl_toolkits.mplot3d import Axes3D
 
 start_time=time.time()
 
-N=100
-t=600
-c=0.5
-y=np.linspace(0, N, N)
-U=np.zeros((N,N,t))
-U[:,:,0]=np.exp(-((y-N//2)**2)/100)
-U[:,:,0]=-U[:,:,0]*np.transpose(U[:,:,0])
+N = 100
+t = 600
+c = 0.5
+y = np.linspace(0, 1, N)
+U = np.zeros((N, N, t))
+U[:,:,0] = np.exp(-((y-0.5)**2)/0.03)
+U[:,:,0] = -U[:,:,0]*np.transpose(U[:,:,0])
 #per poter vedere la configurazione iniziale
 '''
 fig = plt.figure(1)
 ax = fig.gca(projection='3d')
-gridx , gridy = np.meshgrid(range(N), range(N))
-ax.plot_surface(gridx,gridy,U[:,:,0])
+gridx, gridy = np.meshgrid(y, y)
+ax.plot_surface(gridx,gridy,U[:,:,0], cmap=cm.coolwarm)
 plt.show()
 '''
 ##
@@ -30,13 +30,18 @@ for j in np.arange(0,t-1):
         for k in np.arange(0,N-1):
             U[i,k,j+1] = 2*U[i,k,j]-U[i,k,j-1]+ c*(U[i+1,k,j]-2*U[i,k,j]+U[i-1,k,j]+U[i,k+1,j]-2*U[i,k,j]+U[i,k-1,j])
 
-a=(time.time() - start_time)
+##
+#la simulazione restituisce un'onda la cui ampiezza e maggiore della
+#condizione inizale. Probabilmente ciò è dovuto a problemi del metodo adottato
+##
+
+a = (time.time() - start_time)
 print("--- %s secondi per il calcolo ---" %a)
 #si crea un plot per ogni instante di tempo e tutti vengono salvati in una cartella
-gridx , gridy = np.meshgrid(range(N), range(N))
+gridx , gridy = np.meshgrid(y, y)
 
-ZM=np.max(U)
-zm=np.min(U)
+ZM = np.max(U)
+zm = np.min(U)
 for h in range(t):
     fig = plt.figure(h)
     ax = fig.gca(projection='3d')
@@ -46,7 +51,7 @@ for h in range(t):
     ax.set_zlabel('Ampiezza')
     ax.plot_surface(gridx,gridy,U[:,:,h], cmap=cm.coolwarm)
     ax.set_title('Tamburo')
-    plt.savefig(r'C:\Users\franc\Desktop\codici python\gif/%d'%(h))
+    plt.savefig(r'C:\Users\franc\Documents\codici python\gif/%d'%(h))
     plt.close(fig)
 
 b=(time.time() - start_time-a)
@@ -55,7 +60,7 @@ print("--- %s secondi per i plot ---" %b)
 #si prendono dalla cartella i plot e si uniscono creando l'animazione.
 #Essa viene salvata nella stessa cartella dove è il codice
 frames=[]
-imgs=sorted(glob.glob(r'C:\Users\franc\Desktop\codici python\gif/*.png'))
+imgs=sorted(glob.glob(r'C:\Users\franc\Documents\codici python\gif/*.png'))
 imgs.sort(key=len)
 for i in imgs:
     new_frame=Image.open(i)
