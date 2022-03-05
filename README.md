@@ -19,11 +19,15 @@ The Lax method to prevent divergences introduces a numerical diffusion in fact i
 
 <img src="http://latex.codecogs.com/svg.latex?\\\text{the&space;lax&space;step:}&space;\\\\u^{n&plus;1/2}_{j&plus;1/2}&space;=&space;\frac{1}{2}(u^n_{j&plus;1}&space;&plus;&space;u^n_j)&space;-&space;\frac{v&space;\Delta&space;t}{2\Delta&space;x}(u^n_{j&plus;1}&space;-&space;u^n_j)\\\\u^{n&plus;1/2}_{j-1/2}&space;=&space;\frac{1}{2}(u^n_j&space;&plus;&space;u^n_{j-1})&space;-&space;\frac{v&space;\Delta&space;t}{2\Delta&space;x}(u^n_j&space;-&space;u^n_{j-1})\\\\\text{the&space;leap&space;frog&space;step:}&space;\\\\u^{n&plus;1}_j&space;=&space;u^n_j&space;-&space;&space;&space;\frac{v&space;\Delta&space;t}{\Delta&space;x}&space;(u^{n&plus;1/2}_{j&plus;1/2}&space;-&space;u^{n&plus;1/2}_{j-1/2})" title="http://latex.codecogs.com/svg.latex?\\\text{the lax step:} \\\\u^{n+1/2}_{j+1/2} = \frac{1}{2}(u^n_{j+1} + u^n_j) - \frac{v \Delta t}{2\Delta x}(u^n_{j+1} - u^n_j)\\\\u^{n+1/2}_{j-1/2} = \frac{1}{2}(u^n_j + u^n_{j-1}) - \frac{v \Delta t}{2\Delta x}(u^n_j - u^n_{j-1})\\\\\text{the leap frog step:} \\\\u^{n+1}_j = u^n_j - \frac{v \Delta t}{\Delta x} (u^{n+1/2}_{j+1/2} - u^{n+1/2}_{j-1/2})" />
 
-if desired, the method can be generalized to an equation such as:
+An example is in the code trasp_lw.f
+
+If desired, the method can be generalized to an equation such as:
 
 <img src="http://latex.codecogs.com/svg.latex?\frac{\partial&space;u(x,t)}{\partial&space;t}&plus;\frac{\partial&space;f(u(x,t))}{\partial&space;x}=0" title="http://latex.codecogs.com/svg.latex?\frac{\partial u(x,t)}{\partial t}+\frac{\partial f(u(x,t))}{\partial x}=0" />
 
-An example is in the code trasp_lw.f
+For example in the code traspnl_lw.f is solved:
+
+<img src="http://latex.codecogs.com/svg.latex?\frac{\partial&space;u}{\partial&space;t}&space;=&space;\frac{\partial&space;f(u)}{\partial&space;x}&space;\hspace{5&space;mm}&space;\text{with}&space;\hspace{2.5&space;mm}&space;f(u)=&space;v&space;u^2&space;\Rightarrow&space;\frac{\partial&space;u}{\partial&space;t}&space;=&space;2v\frac{\partial&space;u}{\partial&space;x}" title="http://latex.codecogs.com/svg.latex?\frac{\partial u}{\partial t} = \frac{\partial f(u)}{\partial x} \hspace{5 mm} \text{with} \hspace{2.5 mm} f(u)= v u^2 \Rightarrow \frac{\partial u}{\partial t} = 2v\frac{\partial u}{\partial x}" />
 
 the plot.py code can be used to analyze the results of fortran codes.
 
