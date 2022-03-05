@@ -12,11 +12,12 @@ T = np.zeros((N,tstep))
 #Temperatura iniziale
 T[0:N,0] = 500*np.exp(-((50-x)/20)**2)
 
-tau = 10
-D = 0.5*tau
+D = 0.5
 dx = 0.01
-dt = 1e-5 #dt<=dx**2/D
+dt = 1e-4
 r = D*dt/dx**2
+#r < 1/2 affinche integri bene
+print(r)
 
 for time in range(1,tstep):
     for i in range(1,N-1):
