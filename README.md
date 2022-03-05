@@ -24,3 +24,21 @@ if desired, the method can be generalized to an equation such as:
 <img src="http://latex.codecogs.com/svg.latex?\frac{\partial&space;u(x,t)}{\partial&space;t}&plus;\frac{\partial&space;f(u(x,t))}{\partial&space;x}=0" title="http://latex.codecogs.com/svg.latex?\frac{\partial u(x,t)}{\partial t}+\frac{\partial f(u(x,t))}{\partial x}=0" />
 
 An example is in the code trasp_lw.f
+
+the plot.py code can be used to analyze the results of fortran codes.
+
+Another interesting equation to deal with is the heat equation, which is a diffusion equation:
+
+<img src="http://latex.codecogs.com/svg.latex?\frac{\partial&space;u}{\partial&space;t}&space;=&space;D&space;\frac{\partial^2&space;u}{\partial&space;x^2}" title="http://latex.codecogs.com/svg.latex?\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial x^2}" />
+
+this time we can use the Forward Time Centered Space that produce:
+
+<img src="http://latex.codecogs.com/svg.latex?u_{i}^{n&space;&plus;&space;1}&space;=&space;&space;u_{i}^{n}&space;&plus;&space;\frac{D&space;\Delta&space;t}{\Delta&space;x^2}(u_{i&space;&plus;&space;1}^{n}&space;-&space;2&space;u_{i}^{n}&space;&plus;&space;u_{i&space;-&space;1}^{n})" title="http://latex.codecogs.com/svg.latex?u_{i}^{n + 1} = u_{i}^{n} + \frac{D \Delta t}{\Delta x^2}(u_{i + 1}^{n} - 2 u_{i}^{n} + u_{i - 1}^{n})" />
+
+the stability analysis shows that the scheme is stable if:  <img src="http://latex.codecogs.com/svg.latex?\frac{D&space;\Delta&space;t}{\Delta&space;x^2}&space;<&space;\frac{1}{2}" title="http://latex.codecogs.com/svg.latex?\frac{D \Delta t}{\Delta x^2} < \frac{1}{2}" />
+
+we can also adopt an implicit scheme:
+
+<img src="http://latex.codecogs.com/svg.latex?\\u_{i}^{n&space;&plus;&space;1}&space;=&space;u_{i}^{n}&space;&plus;&space;\frac{&space;D&space;\Delta&space;t}{\Delta&space;x^2}&space;(u_{i&space;&plus;&space;1}^{n&plus;1}&space;-&space;2&space;u_{i}^{n&plus;1}&space;&plus;&space;u_{i&space;-&space;1}^{n&plus;1})\hspace{5&space;mm}&space;r&space;=&space;&space;\frac{&space;D&space;\Delta&space;t}{\Delta&space;x^2}&space;\\\\-ru^{n&plus;1}_{i-1}&space;&plus;&space;(1&plus;2r)u^{n&plus;1}_i&space;-&space;ru^{n&plus;1}_{i&plus;1}&space;=&space;u^n_j&space;\\\\\text{we&space;must&space;therefore&space;solve:}\\\\\begin{pmatrix}1&space;&plus;2r&space;&&space;-r&space;&&space;0&space;\\-r&space;&&space;&space;1&space;&plus;2r&space;&&space;\ddots&space;\\0&space;&&space;\ddots&space;&&space;\ddots\end{pmatrix}u^{n&plus;1}&space;=&space;u^n&space;" title="http://latex.codecogs.com/svg.latex?\\u_{i}^{n + 1} = u_{i}^{n} + \frac{ D \Delta t}{\Delta x^2} (u_{i + 1}^{n+1} - 2 u_{i}^{n+1} + u_{i - 1}^{n+1})\hspace{5 mm} r = \frac{ D \Delta t}{\Delta x^2} \\\\-ru^{n+1}_{i-1} + (1+2r)u^{n+1}_i - ru^{n+1}_{i+1} = u^n_j \\\\\text{we must therefore solve:}\\\\\begin{pmatrix}1 +2r & -r & 0 \\-r & 1 +2r & \ddots \\0 & \ddots & \ddots\end{pmatrix}u^{n+1} = u^n " />
+
+Examples of explicit and implicit schema are found respectively in: calore1D_exp.py and calore1D_imp.py 
