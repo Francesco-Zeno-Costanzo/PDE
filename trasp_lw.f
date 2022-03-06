@@ -31,6 +31,11 @@ c=============================================================================
             sol_v(i) = sin(q*2*x) + sin(q*10*x)
       	enddo
       	
+      	!scrivo sul file la condizioone iniziale
+        do i = 0, N
+            write(2,*) sol_v(i)
+	enddo
+      	
       	do i_time = 1, i_T
 	    do i_tpass = 1, i_P
 	        !soluzione intermedia con metodo di lax

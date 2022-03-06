@@ -30,6 +30,11 @@ c=========================================================================
             sol_v(i) = 10*sin(q*1*x) + 15*sin(q*5*x)
       	enddo
       	
+      	!scrivo sul file la condizioone iniziale
+        do i = 0, N
+            write(2,*) sol_v(i)
+	enddo
+	
       	!evoluzione temporale con lax
 	do i_time = 1, i_T
 	    do i_tpass = 1, i_P

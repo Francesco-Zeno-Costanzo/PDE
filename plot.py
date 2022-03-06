@@ -4,12 +4,12 @@ import matplotlib.animation as animation
 
 par = np.loadtxt(r'input_lw.txt')
 N = int(par[0]) + 1
-T = int(par[1])
+T = int(par[1]) + 1
 v = par[2]
 dt = par[3]
 dx = par[4]
 
-u = np.loadtxt(r'tra_lw.dat')
+u = np.loadtxt(r'tra_lw1.dat')
 
 sol = np.reshape(u, (T, N))
 
