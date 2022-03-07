@@ -61,3 +61,4 @@ In the code burger1D_FTCS this equation is solved with the scheme:
 
 <img src="http://latex.codecogs.com/svg.latex?u^{n&plus;1}_j&space;=&space;u^n_j&space;-&space;\frac{dt}{2dx}u^n_j(u^n_{j&plus;1}&space;-&space;u^n_{j-1})&space;&plus;&space;\frac{\nu&space;dt}{dx^2}(u^n_{j&plus;1}&space;-2u^n_j&space;&plus;&space;u^n_{j-1})" title="http://latex.codecogs.com/svg.latex?u^{n+1}_j = u^n_j - \frac{dt}{2dx}u^n_j(u^n_{j+1} - u^n_{j-1}) + \frac{\nu dt}{dx^2}(u^n_{j+1} -2u^n_j + u^n_{j-1})" />
 
+
