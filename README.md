@@ -33,7 +33,7 @@ For example in the code traspnl_lw.f is solved:
 
 It is therefore possible to see the formation and breakage of the wave front, (and of the code when the front is vertical).The plot.py code can be used to analyze the results of fortran codes.
 
-## heat equation ##
+## Heat equation ##
 
 Another interesting equation to deal with is the heat equation, which is a diffusion equation:
 
@@ -52,7 +52,7 @@ we can also adopt an implicit scheme:
 Examples of explicit and implicit schema are found respectively in: calore1D_exp.py and calore1D_imp.py.
 Also in calore1D_imp.f is implemented the implicit scheme and to show solution can be used calore.py
 
-## burger equation ##
+## Burger equation ##
 Wanting to combine transport and diffusion, we obtain the burger equation:
 
 <img src="http://latex.codecogs.com/svg.latex?\frac{\partial&space;u}{\partial&space;t}&space;&plus;&space;u&space;\frac{\partial&space;u}{\partial&space;x}&space;=&space;\nu&space;\frac{\partial^2&space;u&space;}{\partial&space;x^2}" title="http://latex.codecogs.com/svg.latex?\frac{\partial u}{\partial t} + u \frac{\partial u}{\partial x} = \nu \frac{\partial^2 u }{\partial x^2}" />
@@ -61,4 +61,29 @@ In the code burger1D_FTCS this equation is solved with the scheme:
 
 <img src="http://latex.codecogs.com/svg.latex?u^{n&plus;1}_j&space;=&space;u^n_j&space;-&space;\frac{dt}{2dx}u^n_j(u^n_{j&plus;1}&space;-&space;u^n_{j-1})&space;&plus;&space;\frac{\nu&space;dt}{dx^2}(u^n_{j&plus;1}&space;-2u^n_j&space;&plus;&space;u^n_{j-1})" title="http://latex.codecogs.com/svg.latex?u^{n+1}_j = u^n_j - \frac{dt}{2dx}u^n_j(u^n_{j+1} - u^n_{j-1}) + \frac{\nu dt}{dx^2}(u^n_{j+1} -2u^n_j + u^n_{j-1})" />
 
+## Wave equation ##
 
+"
+On the other hand, even if we cannot see beauty in particular measured results, we can already claim to see a certain beauty in the equations which describe general physical laws. For example, in the wave equation, there's something nice about the regularity of the appearance of the x, y, z, and t. And this nice symmetry in appearance of the x, y, z, and t suggests to the mind still a  greater beauty which has to do with the four d1mensions, the possibility that space has four-dimensional symmetry, the possibility of analyzing that and the developments of the special theory of relativity. So there is plenty of intellectual beauty associated with the equations.
+"
+Feynman R. Feynman's Lectures On Physics Volume 2, chapter 20.3.
+
+Let's start with the one-dimensional equation:
+
+<img src="https://latex.codecogs.com/svg.image?\frac{\partial^2&space;u}{\partial&space;x^2}&space;-&space;v^2&space;\frac{\partial^2&space;u}{\partial&space;t^2}&space;=&space;0" title="https://latex.codecogs.com/svg.image?\frac{\partial^2 u}{\partial x^2} - v^2 \frac{\partial^2 u}{\partial t^2} = 0" />
+
+we can use the FTCS in the first instance as shown in the code onde1D_FTCS.py
+
+<img src="https://latex.codecogs.com/svg.image?\frac{u^{n&plus;1}_j&space;-&space;2u^n_j&space;&plus;&space;u^{n-1}_j}{\Delta&space;t^2}&space;-&space;v^2\frac{u^n_{j&plus;1}&space;-&space;2u^n_j&space;&plus;&space;u^n_{j-1}}{\Delta&space;x^2}=&space;0" title="https://latex.codecogs.com/svg.image?\frac{u^{n+1}_j - 2u^n_j + u^{n-1}_j}{\Delta t^2} - v^2\frac{u^n_{j+1} - 2u^n_j + u^n_{j-1}}{\Delta x^2}= 0" />
+
+that requies: <img src="https://latex.codecogs.com/svg.image?\frac{v^2&space;\Delta&space;t^2}{\Delta&space;x^2}&space;<&space;1" title="https://latex.codecogs.com/svg.image?\frac{v^2 \Delta t^2}{\Delta x^2} < 1" />
+
+But with some manipulation is possible to write:
+
+<img src="https://latex.codecogs.com/svg.image?\\r&space;=&space;v&space;\frac{\partial&space;u}{\partial&space;x}&space;\hspace{7&space;mm}&space;s&space;=&space;\frac{\partial&space;u}{\partial&space;t}\\\\\frac{\partial^2&space;u}{\partial&space;x^2}&space;=&space;v^2&space;\frac{\partial^2&space;u}{\partial&space;t^2}&space;\Rightarrow&space;\begin{cases}\frac{\partial&space;r}{\partial&space;t}&space;=&space;v&space;\frac{\partial&space;s}{\partial&space;x}\\\frac{\partial&space;s}{\partial&space;t}&space;=&space;v&space;\frac{\partial&space;r}{\partial&space;x}\end{cases}&space;" title="https://latex.codecogs.com/svg.image?\\r = v \frac{\partial u}{\partial x} \hspace{7 mm} s = \frac{\partial u}{\partial t}\\\\\frac{\partial^2 u}{\partial x^2} = v^2 \frac{\partial^2 u}{\partial t^2} \Rightarrow \begin{cases}\frac{\partial r}{\partial t} = v \frac{\partial s}{\partial x}\\\frac{\partial s}{\partial t} = v \frac{\partial r}{\partial x}\end{cases} " />
+
+which are two coupled transport equations that we can solve with lax wendroff as seen above. With some reworking:
+
+<img src="https://latex.codecogs.com/svg.image?\\r^{n&plus;1}_j&space;=&space;r^n_j&space;&plus;&space;\alpha&space;\Biggl[&space;\frac{1}{2}(s^n_{j&plus;1}-s^n_{j-1})&space;&plus;&space;\frac{\alpha}{2}(r^n_{j&plus;1}&space;-&space;2r^n_j&space;-&space;r^n_{j-1})\Biggr]\\\\s^{n&plus;1}_j&space;=&space;s^n_j&space;&plus;&space;\alpha&space;\Biggl[&space;\frac{1}{2}(r^n_{j&plus;1}-r^n_{j-1})&space;&plus;&space;\frac{\alpha}{2}(s^n_{j&plus;1}&space;-&space;2s^n_j&space;-&space;s^n_{j-1})\Biggr]\\\\u^{n&plus;1}_j&space;=&space;u^n_j&space;&plus;&space;\frac{\Delta&space;t}{2}(s^n_{j&plus;1}&plus;s^n_j)" title="https://latex.codecogs.com/svg.image?\\r^{n+1}_j = r^n_j + \alpha \Biggl[ \frac{1}{2}(s^n_{j+1}-s^n_{j-1}) + \frac{\alpha}{2}(r^n_{j+1} - 2r^n_j - r^n_{j-1})\Biggr]\\\\s^{n+1}_j = s^n_j + \alpha \Biggl[ \frac{1}{2}(r^n_{j+1}-r^n_{j-1}) + \frac{\alpha}{2}(s^n_{j+1} - 2s^n_j - s^n_{j-1})\Biggr]\\\\u^{n+1}_j = u^n_j + \frac{\Delta t}{2}(s^n_{j+1}+s^n_j)" />
+
+with: <img src="https://latex.codecogs.com/svg.image?\alpha&space;=&space;\frac{v&space;\Delta&space;t}{\Delta&space;x}" title="https://latex.codecogs.com/svg.image?\alpha = \frac{v \Delta t}{\Delta x}" />
