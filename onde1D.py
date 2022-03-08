@@ -1,55 +1,45 @@
 import numpy as np
-import matplotlib as mp
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
+par = np.loadtxt(r'input_onde.txt')
+N = int(par[0]) + 1
+t = int(par[1]) + 1
+D = par[2]
+dt = par[3]
+dx = par[4]
 
-N = 125
-t = 315
-c = 1
-y = np.linspace(0, 1, N)
-U = np.zeros((N,t))
-U[0:N,0] = np.sin(2*np.pi*y)
+u = np.loadtxt(r'onde_lw.dat')
 
-for j in np.arange(0,t-1):
-    for i in np.arange(0,N-1):
-        U[i, j+1] = 2*U[i,j]-U[i,j-1]+ c*(U[i+1, j] - 2*U[i, j] + U[i-1, j])
+T = np.reshape(u, (t, N))
 
-##
-#la simulazione restituisce un'onda la cui ampiezza e maggiore della
-#condizione inizale. Probabilmente ciò è dovuto a problemi del metodo adottato
-##
+x = np.linspace(0, N*dx, N)
+
 
 fig = plt.figure(1)
-ax = fig.gca(projection='3d')
-
-ax.set_title('Propagazione onde')
-ax.set_xlabel('Tempo')
-ax.set_ylabel('Lunghezza')
+ax = fig.add_subplot(projection='3d')
+gridx, gridy = np.meshgrid(x, range(t))
+ax.plot_surface(gridx, gridy, T)
+ax.set_title('Corda elastica')
+ax.set_xlabel('distanza')
+ax.set_ylabel('tempo')
 ax.set_zlabel('Ampiezza')
 
-
-gridx, gridy = np.meshgrid(range(t), y)
-ax.plot_surface(gridx,gridy,U)
-
 fig = plt.figure(2)
-plt.xlim(np.min(y), np.max(y))
-plt.ylim(np.min(U)-0.1, np.max(U)+0.1)
+plt.xlim(np.min(x), np.max(x))
+plt.ylim(np.min(T), np.max(T))
 
 line, = plt.plot([], [], 'b')
 def animate(i):
-    line.set_data(y, U[:,i])
+    line.set_data(x, T[i,:])
     return line,
 
 
-anim = animation.FuncAnimation(fig, animate, frames=t ,interval=20, blit=True, repeat=True)
+anim = animation.FuncAnimation(fig, animate, frames=t, interval=10, blit=True, repeat=True)
 
 plt.grid()
-plt.title('Propagazione onde')
+plt.title('Corda elastica')
 plt.xlabel('Distanza')
 plt.ylabel('Ampiezza')
-
-#anim.save('onda.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
 
 plt.show()
