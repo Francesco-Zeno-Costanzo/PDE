@@ -10,7 +10,7 @@ D = par[2]
 dt = par[3]
 dx = par[4]
 
-u = np.loadtxt(r'calore.dat')
+u = np.loadtxt(r'calorekn.dat')
 
 T = np.reshape(u, (t, N))
 
@@ -22,8 +22,8 @@ ax = fig.add_subplot(projection='3d')
 gridx, gridy = np.meshgrid(x, range(t))
 ax.plot_surface(gridx, gridy, T, cmap=mp.cm.coolwarm,vmax=25,linewidth=0,rstride=2, cstride=2)
 ax.set_title('Diffusione del calore')
-ax.set_xlabel('Tempo')
-ax.set_ylabel('Lunghezza')
+ax.set_ylabel('Tempo')
+ax.set_xlabel('Lunghezza')
 ax.set_zlabel('Temperatura')
 
 fig = plt.figure(2)
