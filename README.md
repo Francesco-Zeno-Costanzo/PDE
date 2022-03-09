@@ -50,7 +50,11 @@ we can also adopt an implicit scheme:
 <img src="http://latex.codecogs.com/svg.latex?\\u_{i}^{n&space;&plus;&space;1}&space;=&space;u_{i}^{n}&space;&plus;&space;\frac{&space;D&space;\Delta&space;t}{\Delta&space;x^2}&space;(u_{i&space;&plus;&space;1}^{n&plus;1}&space;-&space;2&space;u_{i}^{n&plus;1}&space;&plus;&space;u_{i&space;-&space;1}^{n&plus;1})\hspace{5&space;mm}&space;r&space;=&space;&space;\frac{&space;D&space;\Delta&space;t}{\Delta&space;x^2}&space;\\\\-ru^{n&plus;1}_{i-1}&space;&plus;&space;(1&plus;2r)u^{n&plus;1}_i&space;-&space;ru^{n&plus;1}_{i&plus;1}&space;=&space;u^n_j&space;\\\\\text{we&space;must&space;therefore&space;solve:}\\\\\begin{pmatrix}1&space;&plus;2r&space;&&space;-r&space;&&space;0&space;\\-r&space;&&space;&space;1&space;&plus;2r&space;&&space;\ddots&space;\\0&space;&&space;\ddots&space;&&space;\ddots\end{pmatrix}u^{n&plus;1}&space;=&space;u^n&space;" title="http://latex.codecogs.com/svg.latex?\\u_{i}^{n + 1} = u_{i}^{n} + \frac{ D \Delta t}{\Delta x^2} (u_{i + 1}^{n+1} - 2 u_{i}^{n+1} + u_{i - 1}^{n+1})\hspace{5 mm} r = \frac{ D \Delta t}{\Delta x^2} \\\\-ru^{n+1}_{i-1} + (1+2r)u^{n+1}_i - ru^{n+1}_{i+1} = u^n_j \\\\\text{we must therefore solve:}\\\\\begin{pmatrix}1 +2r & -r & 0 \\-r & 1 +2r & \ddots \\0 & \ddots & \ddots\end{pmatrix}u^{n+1} = u^n " />
 
 Examples of explicit and implicit schema are found respectively in: calore1D_exp.py and calore1D_imp.py.
-Also in calore1D_imp.f is implemented the implicit scheme and to show solution can be used calore.py
+Also in calore1D_imp.f is implemented the implicit scheme and to show solution can be used calore.py.
+
+It is possible use both implicit and explicit method via the crank_nicolson method:
+
+<img src="https://latex.codecogs.com/svg.image?\\\frac{u_i^{n&plus;1}&space;-&space;u_i^n}{\Delta&space;t}&space;=&space;\frac{D}{2&space;(\Delta&space;x)^2}&space;((u_{i&plus;1}^{n&plus;1}&space;-&space;2&space;u_i^{n&plus;1}&space;&plus;&space;u_{i-1}^{n&plus;1})&space;&plus;&space;&space;(u_{i&plus;1}^n&space;-&space;2&space;u_i^n&space;&plus;&space;u_{i-1}^n))\\\text{define:&space;}r&space;=&space;\frac{a&space;\Delta&space;t}{2(\Delta&space;x)^2}\\\\-r&space;u_{i&plus;1}^{n&plus;1}&space;&plus;&space;(1&space;&plus;&space;2r)&space;u_i^{n&plus;1}&space;-&space;r&space;u_{i-1}^{n&plus;1}&space;=&space;r&space;u_{i&plus;1}^n&space;&plus;&space;(1&space;-&space;2r)&space;u_i^n&space;&plus;&space;r&space;u_{i-1}^n" title="https://latex.codecogs.com/svg.image?\\\frac{u_i^{n+1} - u_i^n}{\Delta t} = \frac{D}{2 (\Delta x)^2} ((u_{i+1}^{n+1} - 2 u_i^{n+1} + u_{i-1}^{n+1}) + (u_{i+1}^n - 2 u_i^n + u_{i-1}^n))\\\text{define: }r = \frac{a \Delta t}{2(\Delta x)^2}\\\\-r u_{i+1}^{n+1} + (1 + 2r) u_i^{n+1} - r u_{i-1}^{n+1} = r u_{i+1}^n + (1 - 2r) u_i^n + r u_{i-1}^n" />
 
 ## Burger equation ##
 Wanting to combine transport and diffusion, we obtain the burger equation:
@@ -66,6 +70,7 @@ In the code burger1D_FTCS this equation is solved with the scheme:
 "
 On the other hand, even if we cannot see beauty in particular measured results, we can already claim to see a certain beauty in the equations which describe general physical laws. For example, in the wave equation, there's something nice about the regularity of the appearance of the x, y, z, and t. And this nice symmetry in appearance of the x, y, z, and t suggests to the mind still a  greater beauty which has to do with the four d1mensions, the possibility that space has four-dimensional symmetry, the possibility of analyzing that and the developments of the special theory of relativity. So there is plenty of intellectual beauty associated with the equations.
 "
+
 Feynman R. Feynman's Lectures On Physics Volume 2, chapter 20.3.
 
 Let's start with the one-dimensional equation:
