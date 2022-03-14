@@ -65,6 +65,12 @@ In the code burger1D_FTCS this equation is solved with the scheme:
 
 <img src="http://latex.codecogs.com/svg.latex?u^{n&plus;1}_j&space;=&space;u^n_j&space;-&space;\frac{dt}{2dx}u^n_j(u^n_{j&plus;1}&space;-&space;u^n_{j-1})&space;&plus;&space;\frac{\nu&space;dt}{dx^2}(u^n_{j&plus;1}&space;-2u^n_j&space;&plus;&space;u^n_{j-1})" title="http://latex.codecogs.com/svg.latex?u^{n+1}_j = u^n_j - \frac{dt}{2dx}u^n_j(u^n_{j+1} - u^n_{j-1}) + \frac{\nu dt}{dx^2}(u^n_{j+1} -2u^n_j + u^n_{j-1})" />
 
+Another possible thing is to pass a Fourier transform in space in order to make the pde become an ode: then we calculate the spatial dierivates in transform make the inverse and then we evolve over time.
+
+<img src="https://latex.codecogs.com/svg.image?u&space;\xrightarrow{FFT}&space;\hat{u};&space;\hspace{5&space;mm}&space;2\pi&space;k&space;\hat{u}&space;\xrightarrow{IFFT}&space;\frac{\partial&space;u}{\partial&space;x}&space;" title="https://latex.codecogs.com/svg.image?u \xrightarrow{FFT} \hat{u}; \hspace{5 mm} 2\pi k \hat{u} \xrightarrow{IFFT} \frac{\partial u}{\partial x} " />
+
+
+
 ## Wave equation ##
 
 "
