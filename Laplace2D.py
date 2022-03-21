@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 #numero punti della griglia, la spaziatura su x e y è la stessa
 N = 50
-
 x = np.linspace(0, 1, N)
 
 #Matrice creata con l'ordinamento lessicografico
