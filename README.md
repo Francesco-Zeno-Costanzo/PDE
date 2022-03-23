@@ -98,3 +98,20 @@ which are two coupled transport equations that we can solve with lax wendroff as
 <img src="https://latex.codecogs.com/svg.image?\\r^{n&plus;1}_j&space;=&space;r^n_j&space;&plus;&space;\alpha&space;\Biggl[&space;\frac{1}{2}(s^n_{j&plus;1}-s^n_{j-1})&space;&plus;&space;\frac{\alpha}{2}(r^n_{j&plus;1}&space;-&space;2r^n_j&space;+&space;r^n_{j-1})\Biggr]\\\\s^{n&plus;1}_j&space;=&space;s^n_j&space;&plus;&space;\alpha&space;\Biggl[&space;\frac{1}{2}(r^n_{j&plus;1}-r^n_{j-1})&space;&plus;&space;\frac{\alpha}{2}(s^n_{j&plus;1}&space;-&space;2s^n_j&space;+&space;s^n_{j-1})\Biggr]\\\\u^{n&plus;1}_j&space;=&space;u^n_j&space;&plus;&space;\frac{\Delta&space;t}{2}(s^n_{j&plus;1}&plus;s^n_j)" title="https://latex.codecogs.com/svg.image?\\r^{n+1}_j = r^n_j + \alpha \Biggl[ \frac{1}{2}(s^n_{j+1}-s^n_{j-1}) + \frac{\alpha}{2}(r^n_{j+1} - 2r^n_j - r^n_{j-1})\Biggr]\\\\s^{n+1}_j = s^n_j + \alpha \Biggl[ \frac{1}{2}(r^n_{j+1}-r^n_{j-1}) + \frac{\alpha}{2}(s^n_{j+1} - 2s^n_j - s^n_{j-1})\Biggr]\\\\u^{n+1}_j = u^n_j + \frac{\Delta t}{2}(s^n_{j+1}+s^n_j)" />
 
 with: <img src="https://latex.codecogs.com/svg.image?\alpha&space;=&space;\frac{v&space;\Delta&space;t}{\Delta&space;x}" title="https://latex.codecogs.com/svg.image?\alpha = \frac{v \Delta t}{\Delta x}" />
+
+## Laplace equation ##
+
+From electrostatics to gravity we frequently see this equation:(would be the poisson equation, the laplace equation is the associated homogeneous)
+
+<img src="https://latex.codecogs.com/svg.image?\nabla^2&space;\phi&space;=&space;f" title="https://latex.codecogs.com/svg.image?\nabla^2 \phi = f" />
+
+in two dimensions we can discretize with the usual rule and obtain:
+
+<img src="https://latex.codecogs.com/svg.image?\frac{\phi_{j&plus;1,i}&space;-&space;2\phi_{j,i}&space;&plus;&space;\phi_{j-1,i}}{\Delta&space;x^2}&space;&plus;&space;\frac{\phi_{j,i&plus;1}&space;-&space;2\phi_{j,i}&space;&plus;&space;\phi_{j,i-1}}{\Delta&space;y^2}&space;=&space;f" title="https://latex.codecogs.com/svg.image?\frac{\phi_{j+1,i} - 2\phi_{j,i} + \phi_{j-1,i}}{\Delta x^2} + \frac{\phi_{j,i+1} - 2\phi_{j,i} + \phi_{j,i-1}}{\Delta y^2} = f" />
+
+if we choose the spatial spacings on equal x and y we can rearrange the problem in a linear system like:
+
+<img src="https://latex.codecogs.com/svg.image?\begin{pmatrix}A&space;&&space;I&space;&&space;0&space;\\I&space;&&space;A&space;&&space;\ddots&space;\\0&space;&&space;\ddots&space;&&space;\ddots\end{pmatrix}\phi&space;=&space;f\hspace{10&space;mm}\text{with:}\hspace{4&space;mm}&space;A=\begin{pmatrix}&space;-4&space;&&space;1&space;&&space;0&space;\\1&space;&&space;-4&space;&&space;\ddots&space;\\0&space;&&space;\ddots&space;&&space;\ddots\end{pmatrix};&space;\hspace{10&space;mm}I=\begin{pmatrix}&space;1&space;&&space;0&space;&&space;0&space;\\0&space;&&space;1&space;&&space;0&space;\\0&space;&&space;0&space;&&space;\ddots\end{pmatrix}&space;&space;" title="https://latex.codecogs.com/svg.image?\begin{pmatrix}A & I & 0 \\I & A & \ddots \\0 & \ddots & \ddots\end{pmatrix}\phi = f\hspace{10 mm}\text{with:}\hspace{4 mm} A=\begin{pmatrix} -4 & 1 & 0 \\1 & -4 & \ddots \\0 & \ddots & \ddots\end{pmatrix}; \hspace{10 mm}I=\begin{pmatrix} 1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & \ddots\end{pmatrix} " />
+
+i.e. a block triadiagonal matrix where the blocks on the diagonal are tridiagonal matrices NxN and those on the other diagonals are the identity NxN.
+in the laplace2D.py code the resolution occurs through the numpy library, while in the laplace2D.f code the succesive over relaxation algorithm is implemented to solve the system. As always there is also the python code to display the result of the fortran program, in this case: laplaceplot.py
