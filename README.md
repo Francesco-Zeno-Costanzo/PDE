@@ -101,7 +101,7 @@ with: <img src="https://latex.codecogs.com/svg.image?\alpha&space;=&space;\frac{
 
 ## Laplace equation ##
 
-From electrostatics to gravity we frequently see this equation:(would be the poisson equation, the laplace equation is the associated homogeneous)
+From electrostatics to gravity we frequently see this equation (would be the poisson equation, the laplace equation is the associated homogeneous):
 
 <img src="https://latex.codecogs.com/svg.image?\nabla^2&space;\phi&space;=&space;f" title="https://latex.codecogs.com/svg.image?\nabla^2 \phi = f" />
 
