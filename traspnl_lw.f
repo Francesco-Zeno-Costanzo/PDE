@@ -1,67 +1,70 @@
-	program traspnonllw
+	program traspnonlinearlw
 C=============================================================================
-C Codice per risolvere l'equazione del trasporto: du/dt + df(u)/dx = 0
-C Il codice utilizza il metodo di lax wendroff:
+C Code to solve the transport equation: du/dt + df(u)/dx = 0. Where f can be
+C an arbritary function of u, so also non linear case
+C The code use the lax wendroff method.
 c=============================================================================
 	implicit real*8 (a-h,p-z)
-	f(u) = v*u**2
+	
+	f(u) = v*u**2 ! non linear equations, wavefront break
 	
 	real*8, dimension(:), allocatable :: sol_v, sol_n, sol_m
 	
-	open(1, file='input_lw.txt', status='old')	!file coi parametri
-	open(2, file='tra_lw1.dat', status='unknown')	!file coi risultati
+	open(1, file='input_trasp.txt', status='old')  !parameter file
+	open(2, file='tra_lxw.dat', status='unknown')  !results file
 	
-	read(1,*) N	!numeri punti sulle x
-	read(1,*) i_T	!numeri di punti nel tempo
-        read(1,*) v	!velocità di propagazione
-        read(1,*) dt	!passo temporale
-        read(1,*) dx	!passo spaziale 	 
-        read(1,*) i_P	!ogni quanto salvare i dati su file
+	read(1,*) N	      !nuber of ponits on spatial  axis
+	read(1,*) i_T	!nuber of ponits on temporal axis
+      read(1,*) v	      !speed of the propagation
+      read(1,*) dt	!temporal step
+      read(1,*) dx	!spatial  step 
+      read(1,*) i_P	!how often to save the solution
         
 	allocate(sol_v(0:N), sol_n(0:N), sol_m(0:N))
      	
-      	c = dt/dx
+      c = dt/dx
         
-	q = 2*4*ATAN(1.) !2pigreco
-        do i = 0, N
-            x = i*dx
-            sol_v(i) = sin(q*2*x)
-      	enddo
+	!Initial condition
+	q = 2.d0 * 4.d0 * datan(1.d0) !2 pi 
+      do i = 0, N
+          x = i*dx
+          sol_v(i) = dsin(q*0.2d0*x)
+      enddo
       	
-      	!scrivo sul file la condizioone iniziale
-        do i = 0, N
-            write(2,*) sol_v(i)
+      !Save the initial condition
+      do i = 0, N
+          write(2,*) sol_v(i)
 	enddo
       	
-      	do i_time = 1, i_T
+      do i_time = 1, i_T
 	    do i_tpass = 1, i_P
-	        !soluzione intermedia con metodo di lax
+	        !solution with lax
 	        do i = 0, N - 1
-		    sol_m(i) = 0.5*(sol_v(i+1) + sol_v(i)) +
-     &                         0.5*c*(f(sol_v(i+1))-f(sol_v(i)))
-		enddo
+		      sol_m(i) = 0.5*(sol_v(i+1) + sol_v(i)) +
+     &                     0.5*c*(f(sol_v(i+1))-f(sol_v(i)))
+		  enddo
 		
-		!soluzione finale con leap frog
-		do i = 1, N - 1
-                    sol_n(i) = sol_v(i)+c*(f(sol_m(i))-f(sol_m(i-1)))
-		enddo
+		  !solution with leap frog
+		  do i = 1, N - 1
+                  sol_n(i) = sol_v(i)+c*(f(sol_m(i))-f(sol_m(i-1)))
+		  enddo
 		
-		!condizioni periodiche al bordo
-		sol_n(0) = sol_n(N - 1)
-		sol_n(N) = sol_n(1)
-		    	
-		!aggiorno la soluzione
-		sol_v = sol_n
+		  !poriodic boundary conditions
+	        sol_n(0) = sol_n(N - 1)
+		  sol_n(N) = sol_n(1)
+		  !update solutions
+	        sol_v = sol_n
 		
 	    enddo
 	    
 	    !scrivo sul file
-            do i = 0, N
-        	write(2,*) sol_v(i)
+          do i = 0, N
+        	  write(2,*) sol_v(i)
 	    enddo
 	    
-        enddo  
+      enddo  
+	
 	deallocate(sol_v, sol_n, sol_m)
 	stop
 	
-	end program traspnonllw
+	end program 
