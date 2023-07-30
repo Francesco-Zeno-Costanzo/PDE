@@ -1,8 +1,14 @@
+"""
+code to solve burger equation using fourier trasform in space
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 import matplotlib.animation as animation
 
+#=============================================================
+# Parameters
+#=============================================================
 
 L = 1
 T = 0.31
@@ -17,26 +23,28 @@ Nt = int(T/dt)
 t = np.linspace(0, T, Nt)
 x = np.linspace(0, L, Nx)
 
-#vettori d'onda
+# wave number
 k = 2*np.pi*np.fft.rfftfreq(Nx, dx)
-#condizione inziale
+# Initial conditions
 u0 = np.sin(2*np.pi*x)
+
+#=============================================================
+# Solutions
+#=============================================================
 
 def eq(u, t, k, nu):
     '''
-    equazione da risolvere in trasformata spaziale
+    equation to be solved in spatial transform
     '''
-    #passo in trasformata così le
-    #derivare sono moltiplicazioni
     u_hat = np.fft.rfft(u)
-    du_hat = 1j*k*u_hat
-    ddu_hat = -k**2*u_hat
+    du_hat = 1j*k*u_hat    # first  derivative
+    ddu_hat = -k**2*u_hat  # second derivative
 
-    #antitrasformo per avere la derivta
+    #antitrasform
     du = np.fft.irfft(du_hat)
     ddu = np.fft.irfft(ddu_hat)
 
-    #adesso la pde è diventata una ode
+    #pde in time and space -> ode in time
     u_t = -u*du + nu*ddu
 
     return u_t.real
@@ -44,7 +52,10 @@ def eq(u, t, k, nu):
 
 sol = odeint(eq, u0, t, args=(k, nu,)).T
 
-##plot
+#=============================================================
+# Plot
+#=============================================================
+
 plt.figure(1)
 freq = np.fft.rfftfreq(Nx, dx)
 sp_i = np.fft.rfft(sol[:, 0])
@@ -53,7 +64,7 @@ sp_f = np.fft.rfft(sol[:,-1])
 plt.subplot(211)
 plt.title(f'spettro soluzione a t = 0')
 plt.ylabel("$|sol(k)|^2$", fontsize=10)
-plt.plot(freq, abs(sp_i)**2, marker='.', linestyle='')
+plt.plot(freq, abs(sp_i)**2, marker='.', linestyle='-', color='b')
 
 plt.yscale('log')
 plt.grid()
@@ -61,9 +72,13 @@ plt.subplot(212)
 plt.title(f'spettro soluzione a t = {T}')
 plt.xlabel("k", fontsize=10)
 plt.ylabel("$|sol(k)|^2$", fontsize=10)
-plt.plot(freq, abs(sp_f)**2, marker='.', linestyle='')
+plt.plot(freq, abs(sp_f)**2, marker='.', linestyle='-', color='b')
 plt.yscale('log')
 plt.grid()
+
+#=============================================================
+# Animations
+#=============================================================
 
 fig = plt.figure(2)
 plt.xlim(np.min(x), np.max(x))
