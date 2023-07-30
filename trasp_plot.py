@@ -1,5 +1,5 @@
 """
-Code the plots of the solutions of the transport equation
+Code for the plots of the solutions of the transport equation
 The code takes the file with the simulation's parameters
 and the solution's files as input from the shell
 """
