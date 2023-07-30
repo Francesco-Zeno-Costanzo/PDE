@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#numero punti della griglia, la spaziatura su x e y è la stessa
+# Number of grid points, spacing on x and y is the same
 N = 50
 x = np.linspace(0, 1, N)
 
-#Matrice creata con l'ordinamento lessicografico
+# Matrix created according to the lexicographic ordering
 M = N**2
 A = np.zeros((M, M))
 
@@ -24,27 +24,28 @@ for i in range(M-N):
     A[i, i+N] = 1
     A[i+N, i] = 1
 
-#termine noto
+#boundary conditions
+#and source function
 B = np.zeros((N,N))
 
-#funzione sorgente
+#souce
 y = np.zeros(N)
 y[N//4]= 1
 y[3*N//4] = -1
 B[:,:] = y#np.sin(2*np.pi*x)
 B[:,:] = B[:,:]*np.transpose(B[:,:])
 
-#dondizioni al bordo
+#boundary
 B[0,:] = 0#np.sin(2*np.pi*x)
 B[:,0] = 0#np.sin(2*np.pi*x)
 B[:,-1] = 0#np.sin(2*np.pi*x)
 B[-1,:] = 0#np.sin(2*np.pi*x)
 
-#faccio diventare la matrice in un vettore
+#transform matrix into array
 b = np.reshape(B, M)
-#risolvo
+#solve
 u = np.linalg.solve(A, b)
-#faccio diventare il vettore della soluzione una matrice
+#back to matrix
 U = np.reshape(u, (N, N))
 
 #Plot
