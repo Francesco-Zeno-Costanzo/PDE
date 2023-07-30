@@ -47,10 +47,23 @@ U = np.reshape(u, (N, N))
 Ex = np.zeros(U.shape)
 Ey = np.zeros(U.shape)
 dx = 1/N
-for i in range(1,N-1):
-    for j in range(1,N-1):
-        Ey[i, j] = -(U[i-1, j] - U[i+1, j])/(2*dx)
-        Ex[i, j] = -(U[i, j-1] - U[i, j+1])/(2*dx)
+
+for i in range(N):
+    for j in range(N):
+        if i >= 1 and  i <N-1:
+            Ey[i, j] = -(U[i+1, j] - U[i-1, j])/(2*dx)
+        elif i >= 1:
+            Ey[i, j] = -(U[i, j] - U[i-1, j])/dx
+        else:
+            Ey[i, j] = -(U[i+1, j] - U[i, j])/dx
+            
+        if j >= 1 and j < N-1:
+            Ex[i, j] = -(U[i, j+1] - U[i, j-1])/(2*dx)
+        elif j>=1:
+            Ex[i, j] = -(U[i, j] - U[i, j-1])/dx
+        else:
+            Ex[i, j] = -(U[i, j+1] - U[i, j])/dx
+        
 
 #Plot
 fig = plt.figure(1)
