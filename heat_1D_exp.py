@@ -1,3 +1,6 @@
+"""
+Code for solving the heat equation using explicit FTCS
+"""
 import numpy as np
 import matplotlib as mp
 import matplotlib.pyplot as plt
@@ -38,7 +41,7 @@ for time in range(1,tstep):
 fig = plt.figure(1)
 ax = fig.add_subplot(projection='3d')
 gridx, gridy = np.meshgrid(range(tstep), range(N))
-ax.plot_surface(gridx,gridy,T, cmap=mp.cm.coolwarm,vmax=250,linewidth=0,rstride=2, cstride=100)
+ax.plot_surface(gridx, gridy, T, cmap=mp.cm.coolwarm,vmax=250,linewidth=0,rstride=2, cstride=100)
 ax.set_title('Heat diffussion')
 ax.set_xlabel('Time')
 ax.set_ylabel('Distance')
