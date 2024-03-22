@@ -40,7 +40,7 @@ c===============================================================================
       do i = 0, N
           x = i*dx
           !u(x, t=0)
-          sol_v(i) = dexp(-((x - 0.2d0)/0.05d0)**2.d0)!dsin(q*0.3d0*x)
+          sol_v(i) = dexp(-((x-0.2d0)/0.05d0)**2.d0)!dsin(q*0.3d0*x)
           !v*du/dx
           r_v(i) =-v*dexp(-((x-0.2d0)/0.05d0)**2.d0)*800.d0*(x-0.2d0)!v*q*0.3d0*dcos(q*0.3d0*x)
           !du/dt
@@ -68,7 +68,12 @@ c===============================================================================
               r_n(N) = r_n(1)
               s_n(0) = s_n(N - 1)
               s_n(N) = s_n(1)
-              ! Comment these four lines for absorbing boundary condition
+
+              ! For absorbing boundary condition (zero derivative):
+              !r_n(0) = r_n(1)
+              !r_n(N) = r_n(N-1)
+              !s_n(0) = s_n(1)
+              !s_n(N) = s_n(N-1)
 
               !solution with leap frog
               do i = 0, N !- 1
