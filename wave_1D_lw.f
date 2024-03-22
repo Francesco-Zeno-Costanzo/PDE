@@ -40,9 +40,9 @@ c===============================================================================
       do i = 0, N
           x = i*dx
           !u(x, t=0)
-          sol_v(i) = dsin(q*0.3d0*x)
+          sol_v(i) = dexp(-((x - 0.2d0)/0.05d0)**2.d0)!dsin(q*0.3d0*x)
           !v*du/dx
-          r_v(i) = v*q*0.3d0*dcos(q*0.3d0*x)
+          r_v(i) =-v*dexp(-((x-0.2d0)/0.05d0)**2.d0)*800.d0*(x-0.2d0)!v*q*0.3d0*dcos(q*0.3d0*x)
           !du/dt
           s_v(i) = 0.d0
       enddo
@@ -63,12 +63,12 @@ c===============================================================================
      &            0.5*alpha**2*(s_v(i+1) - 2.0*s_v(i) + s_v(i-1))
               enddo
 
-              !poriodic boundary conditions
+              ! Periodic boundary conditions
               r_n(0) = r_n(N - 1)
               r_n(N) = r_n(1)
-
               s_n(0) = s_n(N - 1)
               s_n(N) = s_n(1)
+              ! Comment these four lines for absorbing boundary condition
 
               !solution with leap frog
               do i = 0, N !- 1
