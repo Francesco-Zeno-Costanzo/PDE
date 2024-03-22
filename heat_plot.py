@@ -40,8 +40,8 @@ ax = fig.add_subplot(projection='3d')
 gridx, gridy = np.meshgrid(x, range(t))
 ax.plot_surface(gridx, gridy, T, cmap=mp.cm.coolwarm,vmax=250,linewidth=0,rstride=2, cstride=2)
 ax.set_title('Heat diffussion')
-ax.set_xlabel('Time')
-ax.set_ylabel('Distance')
+ax.set_ylabel('Time')
+ax.set_xlabel('Distance')
 ax.set_zlabel('Temperature')
 
 #===============================================================
